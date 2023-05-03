@@ -1,6 +1,7 @@
 <?php
 session_start();
 $noNavbar = '';
+$pageTitel = 'Login';
 if (isset($_SESSION['Username'])) {
     header('Location: dashboard.php');
 }
@@ -16,13 +17,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $hashedPass = sha1($password);
     //echo $username . ' ' . $hashedPass;
     //Check If The User Exist In Database
-    $stmt = $con->prepare("SELECT Username,Password FROM users WHERE Username= ? AND Password = ? AND GroupID=1");
+    $stmt = $con->prepare("SELECT UserID, Username,Password FROM users WHERE Username= ? AND Password = ? AND GroupID=1 LIMIT 1");
     $stmt->execute(array($username, $hashedPass));
+    $row = $stmt->fetch();
     $count = $stmt->rowCount();
     echo $count;
     if ($count > 0) {
         // echo 'Welcome Admin ' . $username;
         $_SESSION['Username'] = $username; //Register Session Name
+        $_SESSION['ID'] = $row['UserID'];
         header('Location: dashboard.php');
         exit();
     }
