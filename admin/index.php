@@ -21,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute(array($username, $hashedPass));
     $row = $stmt->fetch();
     $count = $stmt->rowCount();
-    echo $count;
     if ($count > 0) {
         // echo 'Welcome Admin ' . $username;
         $_SESSION['Username'] = $username; //Register Session Name

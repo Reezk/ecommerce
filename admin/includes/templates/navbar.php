@@ -7,13 +7,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="#" class="navbar-brand"><?php echo lang('HOME_ADMIN') ?></a>
+            <a href="../admin/dashboard.php" class="navbar-brand"><?php echo lang('HOME_ADMIN') ?></a>
         </div>
         <div class="collapse navbar-collapse" id="app-nav">
             <ul class="nav navbar-nav">
                 <li><a href="#"><?php echo lang('CATEGORIES') ?> </a></li>
                 <li><a href="#"><?php echo lang('ITEMS') ?> </a></li>
-                <li><a href="#"><?php echo lang('MEMBERS') ?> </a></li>
+                <li><a href="members.php"><?php echo lang('MEMBERS') ?> </a></li>
                 <li><a href="#"><?php echo lang('STATISTICS') ?> </a></li>
                 <li><a href="#"><?php echo lang('LOGS') ?> </a></li>
             </ul>
