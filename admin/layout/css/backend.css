@@ -2,6 +2,7 @@
 
 body{
 background-color: #f4f4f4;
+/* background-color: red; */
 }
 .asterisk{
     font-size: 30px;
@@ -13,7 +14,20 @@ background-color: #f4f4f4;
 }
 /* End Main Rulez */
 
+/* Start Dashboard Page */
 
+ .home-stats .stat{
+    background-color: #eee;
+    border: 1px solid #ccc;
+    padding: 20px;
+    font-size: 15px;
+ }
+ .home-stats .stat span{
+    display: block;
+    font-size: 50px;
+ }
+
+/* End Dashboard Page */
 
 /* Start login form */
 
@@ -77,4 +91,29 @@ h1{
     margin: 40px;
     font-weight: bold;
     color: #666;
+}
+.show-pass{
+    position: absolute;
+    top: 6px;
+    right: -30;
+
+}
+.main-table{
+    -webkit-box-shadow:0 3px 10px #ccc;
+    -moz-box-shadow:0 3px 10px #ccc;
+    box-shadow:0 3px 10px #ccc;
+}
+.main-table td{
+    background-color: #fff;
+    vertical-align: middle !important;
+}
+.main-table tr:first-child td{
+    background-color: #333;
+    color: #fff;
+}
+.main-table .btn{
+    padding: 3px 10px;
+}
+.h2{
+    color: #333;
 }
