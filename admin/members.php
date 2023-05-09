@@ -9,8 +9,11 @@ if (isset($_SESSION['Username'])) {
     //start manage page
     if ($do == 'Manage') {
 
-
-        $stmt = $con->prepare("SELECT * FROM users WHERE GroupID !=1");
+        $query = '';
+        if (isset($_GET['page']) && $_GET['page'] == 'Pending') {
+            $query = ' AND RegStatus = 0';
+        }
+        $stmt = $con->prepare("SELECT * FROM users WHERE GroupID !=1 $query");
         $stmt->execute();
         $rows = $stmt->fetchAll();
 ?>
@@ -36,8 +39,11 @@ if (isset($_SESSION['Username'])) {
                             <td>' . $row['Date'] . '</td>
                             <td>
                                 <a class="btn btn-success" href="members.php?do=Edit&userid=' . $row['UserID'] . '"><i class ="fa fa-edit"></i> Edit</a>
-                                <a class="btn btn-danger confirm" href="members.php?do=Delete&userid=' . $row['UserID'] . '"><i class ="fa fa-close"></i> Delete</a>
-                            </td>
+                                <a class="btn btn-danger confirm" href="members.php?do=Delete&userid=' . $row['UserID'] . '"><i class ="fa fa-close"></i> Delete</a>';
+                        if ($row['RegStatus'] == 0) {
+                            echo '<a class="btn btn-info activate" href="members.php?do=Activate&userid=' . $row['UserID'] . '"><i class="far fa-hourglass-half"></i> Activate</a>';
+                        }
+                        echo '</td>
                         </tr>
                         ';
                     } ?>
@@ -141,7 +147,7 @@ if (isset($_SESSION['Username'])) {
                     $thMsg = "<div class='alert alert-danger text-center'>Sorry This Usename Is Exist";
                     redirectHome($thMsg, 'back');
                 } else {
-                    $stmt = $con->prepare("INSERT INTO users(Username,Password,Email,FullName,Date) VALUES(:zuser,:zpass,:zmail,:zname,now())");
+                    $stmt = $con->prepare("INSERT INTO users(Username,Password,Email,FullName,RegStatus,Date) VALUES(:zuser,:zpass,:zmail,:zname,1,now())");
                     $stmt->execute(array(
                         'zuser' => $username,
                         'zpass' => $hashPass,
@@ -275,6 +281,22 @@ if (isset($_SESSION['Username'])) {
             $stmt->bindParam(":zuser", $userid);
             $stmt->execute();
             $successMsg =  '<div class="alert alert-success text-center">' . $stmt->rowCount() . ' Record Deleted</div>';
+            redirectHome($successMsg,  6);
+        } else {
+            $errorMsg = '<div class="alert alert-danger text-center"> The ID Is not Exist</div>';;
+            redirectHome($errorMsg,  6);
+        }
+        echo "</div>";
+    } elseif ($do == "Activate") {
+        echo "<h1 class = 'text-center'>Activate Members</h1>";
+        echo "<div class = 'container'>";
+        $userid = (isset($_GET['userid']) && is_numeric($_GET['userid'])) ? intval($_GET['userid']) : 0;
+        $chek = checkItem('UserID', 'users', $userid);
+
+        if ($chek > 0) {
+            $stmt = $con->prepare("UPDATE users SET RegStatus = 1 WHERE UserID = ?");
+            $stmt->execute(array($userid));
+            $successMsg =  '<div class="alert alert-success text-center">' . $stmt->rowCount() . ' Record Activated</div>';
             redirectHome($successMsg,  6);
         } else {
             $errorMsg = '<div class="alert alert-danger text-center"> The ID Is not Exist</div>';;

@@ -8,7 +8,7 @@ function getTitle()
         echo  'Defult';
     }
 }
-function redirectHome($theMsg, $url = null, $seconds = 6)
+function redirectHome($theMsg, $url = null, $seconds = 3)
 {
     if ($url === null) {
         $url = 'members.php';
@@ -46,4 +46,29 @@ function checkItem($select, $from, $value)
     $statment->execute(array($value));
     $count = $statment->rowCount();
     return $count;
+}
+/* 
+* Count Number Of Items Function
+* Function to Count Number Of Items ROws
+*/
+function countItem($item, $table)
+{
+    global $con;
+    $stat2 = $con->prepare("SELECT COUNT($item) FROM $table");
+    $stat2->execute();
+    return $stat2->fetchColumn();
+}
+/* 
+*
+*
+ */
+
+function getLatest($select, $table, $order, $limit = 3)
+{
+    global $con;
+
+    $getStat = $con->prepare("SELECT $select FROM $table ORDER BY $order DESC LIMIT $limit");
+    $getStat->execute();
+    $rows = $getStat->fetchAll();
+    return $rows;
 }
