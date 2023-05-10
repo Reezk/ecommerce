@@ -1,4 +1,5 @@
 <?php
+ob_start(); //Output Buffering Start
 session_start();
 if (isset($_SESSION['Username'])) {
     $pageTitel = 'Dashboard';
@@ -72,10 +73,6 @@ if (isset($_SESSION['Username'])) {
             </div>
         </div>
     </div>
-
-
-
-
 <?php
     /* End Dashboard Page */
 
@@ -85,3 +82,4 @@ if (isset($_SESSION['Username'])) {
     header('Location: index.php');
     exit();
 }
+ob_end_flush(); //Relase the Output

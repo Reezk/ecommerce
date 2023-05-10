@@ -11,9 +11,9 @@ function getTitle()
 function redirectHome($theMsg, $url = null, $seconds = 3)
 {
     if ($url === null) {
-        $url = 'members.php';
+        $url = 'index.php';
     } else {
-        $url = isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== '' ? $_SERVER['HTTP_REFERER'] : 'members.php';
+        $url = isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== '' ? $_SERVER['HTTP_REFERER'] : 'index.php';
     }
     echo $theMsg;
     echo "<div class='alert alert-info text-center'>You Will Be Directed To $url  Home After $seconds Seconds.</div>";

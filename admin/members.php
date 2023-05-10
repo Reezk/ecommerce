@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 $pageTitel = 'Members';
 if (isset($_SESSION['Username'])) {
@@ -144,7 +145,7 @@ if (isset($_SESSION['Username'])) {
 
                 $chek = checkItem('Username', 'users', $username);
                 if ($chek == 1) {
-                    $thMsg = "<div class='alert alert-danger text-center'>Sorry This Usename Is Exist";
+                    $thMsg = "<div class='alert alert-danger text-center'>Sorry This Usename Is Exist</div>";
                     redirectHome($thMsg, 'back');
                 } else {
                     $stmt = $con->prepare("INSERT INTO users(Username,Password,Email,FullName,RegStatus,Date) VALUES(:zuser,:zpass,:zmail,:zname,1,now())");
@@ -154,14 +155,18 @@ if (isset($_SESSION['Username'])) {
                         'zmail' => $email,
                         'zname' => $fullname
                     ));
+
+                    echo '<div class = "container">';
                     $successMsg = '<div class="alert alert-success text-center"> ' . $stmt->rowCount() . ' Record Insert' . '</div>';
                     redirectHome($successMsg, 'back');
+                    echo '</div>';
                 }
             }
         } else {
             $errorMsg =  '<div class="alert alert-danger text-center"> You Cant Browser The Pge Directly</div>';
             redirectHome($errorMsg, 6);
         }
+        echo "</div>";
         echo "<div class = 'container'>";
     } elseif ($do == 'Edit') {
 
@@ -266,7 +271,7 @@ if (isset($_SESSION['Username'])) {
             $errorMsg =  '<div class="alert alert-danger text-center">You Cant Browser The Pge Directly</div>';
             redirectHome($errorMsg,  3);
         }
-        echo "</>";
+        echo "</div>";
     } elseif ($do == "Delete") {
         echo "<h1 class = 'text-center'>Delete Members</h1>";
         echo "<div class = 'container'>";
@@ -309,3 +314,4 @@ if (isset($_SESSION['Username'])) {
     header('Location: index.php');
     exit();
 }
+ob_end_flush();
