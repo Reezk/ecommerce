@@ -160,16 +160,24 @@ h1{
 }
 /* Start Categoreis Page */
 
+.categories .panel-heading{
+    color: #959595;
+    font-weight: bold;
+}   
 .categories .panel-body{
     padding: 0;
 }   
-.categories .ordering a{
+.categories .option a{
     color:#888;
     text-decoration: none;
 }
-.categories .ordering .active{
+.categories .option span{
+    color:#888;
+    cursor: pointer;
+}
+.categories .option .active{
     color:#f00;
-    font-weight: bold;
+
 }
 .categories .cat {
     padding: 15px;
@@ -194,11 +202,18 @@ h1{
     margin-right: 5px;
 }
 .categories .cat h3{
-    margin: 0 0 10px;
+    margin: 0px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #6A6A6A;
+}
+.categories .cat .full-view p{
+    margin: 10px 0;
+    color: #707070;
 }
 .categories hr{
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 .categories .cat:last-of-type ~ hr{
     display: none;
@@ -223,5 +238,9 @@ h1{
     padding: 4px 6px;
     margin-right: 6px;
     border-radius: 5px
+}
+.categories .add-category{
+    margin-bottom: 30px;
+    margin-top: -10px;
 }
 /* End Categoreis Page */

@@ -12,8 +12,8 @@ if (isset($_SESSION['Username'])) {
     include 'init.php';
     $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
     if ($do == 'Manage') {
-        $sort = 'ASC';
-        $sort_array = array('ASC', 'DESC');
+        $sort = 'Asc';
+        $sort_array = array('Asc', 'Desc');
         if (isset($_GET['sort']) && in_array($_GET['sort'], $sort_array)) {
             $sort = $_GET['sort'];
         }
@@ -24,15 +24,18 @@ if (isset($_SESSION['Username'])) {
         <h1 class="text-center">Manage Categories</h1>
         <div class="container categories">
             <div class="panel panel-default">
-                <div class="panel-heading">Manage Categories
-                    <div class="ordering pull-right">
-                        Ordering :
-                        <a class="<?php if ($sort == 'ASC') {
+                <div class="panel-heading"><i class="fa fa-edit"></i> Manage Categories
+                    <div class="option pull-right">
+                        <i class="fa fa-sort"></i> Ordering : [
+                        <a class="<?php if ($sort == 'Asc') {
                                         echo 'active';
-                                    } ?>" href="?sort=ASC">ASC</a> |
-                        <a class="<?php if ($sort == 'DESC') {
+                                    } ?>" href="?sort=Asc">Asc</a> |
+                        <a class="<?php if ($sort == 'Desc') {
                                         echo 'active';
-                                    } ?>" href="?sort=DESC">DESC</a>
+                                    } ?>" href="?sort=Desc">Desc </a>]
+                        <i class="fa fa-eye"></i> View : [
+                        <span class="active" data-view="full">Full</span> |
+                        <span data-view="classic">Classic </span>]
                     </div>
                 </div>
                 <div class="panel-body">
@@ -41,9 +44,11 @@ if (isset($_SESSION['Username'])) {
                         echo '<div class = "cat">';
                         echo '<div class = "hidden-buttons">';
                         echo '<a href="categories.php?do=Edit&catid=' . $cat['ID'] . '" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edite</a>';
-                        echo '<a href="#" class="btn btn-xs btn-danger"><i class="fa fa-close"></i> Delete</a>';
+                        echo '<a href="?do=Delete&catid=' . $cat['ID'] . '" class="confirm btn btn-xs btn-danger"><i class="fa fa-close"></i> Delete</a>';
                         echo '</div>';
                         echo '<h3>' . $cat['Name'] . '</h3>';
+
+                        echo '<div class="full-view">'; //start full view
                         echo '<p>';
                         if ($cat['Description'] == '') {
                             echo 'This Is Description Empty';
@@ -52,20 +57,22 @@ if (isset($_SESSION['Username'])) {
                         }
                         echo '</p>';
                         if ($cat['Visibility'] == 1) {
-                            echo '<span class= "visibility">Hidden </span>';
+                            echo '<span class= "visibility"><i class="fa fa-eye"></i> Hidden </span>';
                         }
                         if ($cat['Allow_Comment'] == 1) {
-                            echo '<span class= "commenting">Comment Disabled </span>';
+                            echo '<span class= "commenting"><i class="fa fa-close"></i> Comment Disabled </span>';
                         }
                         if ($cat['Allow_Ads'] == 1) {
-                            echo '<span class= "advertises">Ads Disabled</span>';
+                            echo '<span class= "advertises"><i class="fa fa-close"></i> Ads Disabled</span>';
                         }
+                        echo '</div>'; // End full view
                         echo '</div>';
                         echo '<hr>';
                     }
                     ?>
                 </div>
             </div>
+            <a class="add-category btn btn-primary" href="?do=Add"><i class="fa fa-plus"></i> New Category</a>
         </div>
     <?php
     } elseif ($do == 'Add') {
@@ -187,7 +194,7 @@ if (isset($_SESSION['Username'])) {
                 ));
                 echo '<div class = "container">';
                 $successMsg = '<div class="alert alert-success text-center"> ' . $stmt->rowCount() . ' Record Insert' . '</div>';
-                redirectHome($successMsg, 'back');
+                redirectHome($successMsg, 'categories.php');
                 echo '</div>';
             }
         } else {
@@ -204,10 +211,10 @@ if (isset($_SESSION['Username'])) {
         $count = $stmt->rowCount();
     ?>
 
-        <h1 class="text-center">Edit Category</h1>
+        <h1 class="text-center">Edit New Categories</h1>
         <div class="container">
             <?php if ($stmt->rowCount() > 0) { ?>
-                <form action="categories.php?do=Update" method="POST" class="form-horizontal">
+                <form action="?do=Update" method="POST" class="form-horizontal">
                     <input type="hidden" name="catid" value="<?php echo $catid ?>">
                     <!-- Start Name Filed -->
                     <div class="form-group">
@@ -309,7 +316,6 @@ if (isset($_SESSION['Username'])) {
             echo "<h1 class = 'text-center'>Update Category</h1>";
             echo "<div class = 'container'>";
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
                 $id = $_POST['catid'];
                 $name = $_POST['name'];
                 $description = $_POST['description'];
@@ -319,34 +325,51 @@ if (isset($_SESSION['Username'])) {
                 $ads = $_POST['ads'];
 
                 $stmt = $con->prepare("UPDATE 
-                                            categories 
+                                            `categories` 
                                         SET 
-                                                    Name =:name , 
-                                                    Description = :description, 
-                                                    Ordering =:ordering,
-                                                    Visibility =:visibility,
-                                                    Allow_Comment =:commenting,
-                                                    Allow_Ads =:ads,
+                                                    `Name` =? , 
+                                                    `Description` = ?, 
+                                                    Ordering =?,
+                                                    Visibility =?,
+                                                    Allow_Comment =?,
+                                                    Allow_Ads =?
                                                         WHERE 
-                                                    ID = :id");
+                                                    ID = ?");
                 $stmt->execute(array(
-                    ':name' => $name,
-                    ':description' => $description,
-                    ':ordering' => $ordering,
-                    ':visibility' => $visibility,
-                    ':commenting' => $commenting,
-                    ':ads' => $ads,
-                    ':id' => $id
+                    $name,
+                    $description,
+                    $ordering,
+                    $visibility,
+                    $commenting,
+                    $ads,
+                    $id
                 ));
 
                 $successMsg =  '<div class="alert alert-success text-center">' . $stmt->rowCount() . ' Record Update</div>';
-                redirectHome($successMsg,  3);
+                redirectHome($successMsg,  50);
             } else {
                 $errorMsg =  '<div class="alert alert-danger text-center">You Cant Browser The Pge Directly</div>';
                 redirectHome($errorMsg,  3);
             }
             echo "</div>";
         } elseif ($do == 'Delete') {
+            echo "<h1 class = 'text-center'>Delete Category</h1>";
+            echo "<div class = 'container'>";
+            //Check If Get Request catid Is Numeric & Get The Integer Value Of It
+            $catid = (isset($_GET['catid']) && is_numeric($_GET['catid'])) ? intval($_GET['catid']) : 0;
+            $chek = checkItem('ID', 'categories', $catid);
+
+            if ($chek > 0) {
+                $stmt = $con->prepare("DELETE FROM categories WHERE ID = :zcatid");
+                $stmt->bindParam(":zcatid", $catid);
+                $stmt->execute();
+                $successMsg =  '<div class="alert alert-success text-center">' . $stmt->rowCount() . ' Record Deleted</div>';
+                redirectHome($successMsg,  6);
+            } else {
+                $errorMsg = '<div class="alert alert-danger text-center"> The ID Is not Exist</div>';;
+                redirectHome($errorMsg,  'back');
+            }
+            echo "</div>";
         }
         include $tpl . 'footer.php';
     } else {

@@ -1,13 +1,13 @@
 <?php
 /* 
 ===========================
-=== Template Page
+=== Items Page
 ===========================
 */
 
 ob_start();
 session_start();
-$pageTitel = '';
+$pageTitel = 'Items';
 if (isset($_SESSION['Username'])) {
     include 'init.php';
     $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
@@ -17,7 +17,7 @@ if (isset($_SESSION['Username'])) {
     } elseif ($do == 'Edit') {
     } elseif ($do == 'Update') {
     } elseif ($do == 'Delete') {
-    } elseif ($do == 'Activate') {
+    } elseif ($do == 'Approve') {
     }
     include $tpl . 'footer.php';
 } else {
