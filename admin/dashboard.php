@@ -21,7 +21,7 @@ if (isset($_SESSION['Username'])) {
                     <div class="stat st-pending">Pending Members <span><a href="members.php?do=Manage&page=Pending"><?php echo checkItem('RegStatus', 'users', 0); ?></a></span></div>
                 </div>
                 <div class="col-md-3">
-                    <div class="stat st-items">Toal Items <span>1500</span></div>
+                    <div class="stat st-items">Toal Items <span><a href="items.php"><?php echo countItem('ItemID', 'items'); ?></a></span></div>
                 </div>
                 <div class="col-md-3">
                     <div class="stat st-comments">Total Comments <span>3500</span></div>
