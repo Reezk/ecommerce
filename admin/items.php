@@ -47,6 +47,9 @@ if (isset($_SESSION['Username'])) {
                             <td>
                                 <a class="btn btn-success" href="items.php?do=Edit&itemid=' . $item['ItemID'] . '"><i class ="fa fa-edit"></i> Edit</a>
                                 <a class="btn btn-danger confirm" href="items.php?do=Delete&itemid=' . $item['ItemID'] . '"><i class ="fa fa-close"></i> Delete</a>';
+                        if ($item['Approve'] == 0) {
+                            echo '<a class="btn btn-info activate" href="items.php?do=Approve&itemid=' . $item['ItemID'] . '"><i class="fa fa-check"></i> Approve</a>';
+                        };
                         echo '</td>
                         </tr>
                         ';
@@ -259,6 +262,7 @@ if (isset($_SESSION['Username'])) {
         <div class="container">
             <?php if ($count > 0) { ?>
                 <form action="?do=Update" method="POST" class="form-horizontal">
+                    <input type="hidden" name="itemid" value="<?php echo $itemid ?>">
                     <!-- Start Name Filed -->
                     <div class="form-group">
                         <label for="" class="col-sm-2 control-label">Name</label>
@@ -393,8 +397,102 @@ if (isset($_SESSION['Username'])) {
 <?php
             }
         } elseif ($do == 'Update') {
+            echo "<h1 class = 'text-center'>Update Item</h1>";
+            echo "<div class = 'container'>";
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $id = $_POST['itemid'];
+                $name = $_POST['name'];
+                $description = $_POST['description'];
+                $price = $_POST['price'];
+                $contry = $_POST['contry'];
+                $status = $_POST['status'];
+                $rating = $_POST['rating'];
+                $members = $_POST['members'];
+                $categories = $_POST['categories'];
+
+                $formErrors = array();
+                if (empty($name)) {
+                    $formErrors[] = 'Name cant be <strong>Empty</strong>';
+                }
+                if (empty($description)) {
+                    $formErrors[] = 'Description cant be <strong>Empty</strong>';
+                }
+                if (empty($price)) {
+                    $formErrors[] = 'Price  cant be <strong>Empty</strong>';
+                }
+                if ($status == 0) {
+                    $formErrors[] = 'You Must Choose the <strong>Status</strong>';
+                }
+                if ($rating == 0) {
+                    $formErrors[] = 'You Must Choose the <strong>rating</strong>';
+                }
+                if (empty($contry)) {
+                    $formErrors[] = 'Contry cant be <strong>Empty</strong>';
+                }
+                if ($categories == 0) {
+                    $formErrors[] = 'You Must Choose the <strong>Categories</strong>';
+                }
+                if ($members == 0) {
+                    $formErrors[] = 'You Must Choose the <strong>Members</strong>';
+                }
+                foreach ($formErrors as $error) {
+                    echo '<div class ="alert alert-danger text-center" >' . $error . '</div>';
+                }
+                if (empty($formErrors)) {
+                    $stmt = $con->prepare("UPDATE items SET Name=? , Description = ?, Price=?,CountryMade = ?,Status=?,Rating=?,CatID =?,MemberID =? WHERE ItemID = ?");
+                    $stmt->execute(array($name, $description, $price, $contry, $status, $rating, $categories, $members, $id));
+
+                    $successMsg =  '<div class="alert alert-success text-center">' . $stmt->rowCount() . ' Record Update</div>';
+                    redirectHome($successMsg,  'back');
+                }
+            } else {
+                $errorMsg =  '<div class="alert alert-danger text-center">You Cant Browser The Pge Directly</div>';
+                redirectHome($errorMsg,  3);
+            }
+            echo "</div>";
         } elseif ($do == 'Delete') {
+            echo "<h1 class = 'text-center'>Delete Item</h1>";
+            echo "<div class = 'container'>";
+            $itemid = (isset($_GET['itemid']) && is_numeric($_GET['itemid'])) ? intval($_GET['itemid']) : 0;
+            /*  $stmt = $con->prepare("SELECT * FROM users WHERE UserID = ? LIMIT 1");
+            $stmt->execute(array($itemid));
+            $count = $stmt->rowCount(); */
+            $chek = checkItem('ItemID', 'items', $itemid);
+
+            if ($chek > 0) {
+                $stmt = $con->prepare("DELETE FROM items WHERE ItemID = :zitem");
+                $stmt->bindParam(":zitem", $itemid);
+                $stmt->execute();
+                $successMsg =  '<div class="alert alert-success text-center">' . $stmt->rowCount() . ' Record Deleted</div>';
+                redirectHome(
+                    $successMsg,
+                    'back'
+                );
+            } else {
+                $errorMsg = '<div class="alert alert-danger text-center"> The ID Is not Exist</div>';;
+                redirectHome($errorMsg, 'back', 6);
+            }
+            echo "</div>";
         } elseif ($do == 'Approve') {
+            echo "<h1 class = 'text-center'>Approve Item</h1>";
+            echo "<div class = 'container'>";
+            $itemid = (isset($_GET['itemid']) && is_numeric($_GET['itemid'])) ? intval($_GET['itemid']) : 0;
+
+            $chek = checkItem('ItemID', 'items', $itemid);
+
+            if ($chek > 0) {
+                $stmt = $con->prepare("UPDATE items SET Approve = 1 WHERE ItemID = ?");
+                $stmt->execute(array($itemid));
+                $successMsg =  '<div class="alert alert-success text-center">' . $stmt->rowCount() . ' Record Deleted</div>';
+                redirectHome(
+                    $successMsg,
+                    'back'
+                );
+            } else {
+                $errorMsg = '<div class="alert alert-danger text-center"> The ID Is not Exist</div>';;
+                redirectHome($errorMsg, 'back', 6);
+            }
+            echo "</div>";
         }
         include $tpl . 'footer.php';
     } else {

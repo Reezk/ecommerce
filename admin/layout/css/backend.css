@@ -1,10 +1,11 @@
 /* Start Main Rulez */
 
-body{
-background-color: #f4f4f4;
-/* background-color: red; */
+body {
+    background-color: #f4f4f4;
+    /* background-color: red; */
 }
-.asterisk{
+
+.asterisk {
     font-size: 30px;
     position: absolute;
     right: 30px;
@@ -12,79 +13,120 @@ background-color: #f4f4f4;
     color: #D20707;
 
 }
+
 /* End Main Rulez */
 
 /* Start Dashboard Page */
 
- .home-stats .stat{
+.home-stats .stat {
     padding: 20px;
     font-size: 15px;
     color: #fff;
     border-radius: 10px;
- }
- .home-stats .stat a{
+    position: relative;
+    overflow: hidden;
+}
+
+.home-stats .stat .info {
+    float: right;
+}
+
+.home-stats .stat i {
+    position: absolute;
+    font-size: 80px;
+    top: 35px;
+    left: 30px;
+}
+
+.home-stats .stat a {
     color: #fff;
- }
- .home-stats .stat a:hover{
+}
+
+.home-stats .stat a:hover {
     text-decoration: none;
- }
- .home-stats .stat span{
+}
+
+.home-stats .stat span {
     display: block;
     font-size: 60px;
- }
- .home-stats .st-members {
+}
+
+.home-stats .st-members {
     background-color: #3498db;
- }
- .home-stats .st-pending {
+}
+
+.home-stats .st-pending {
     background-color: #c0392b;
- }
- .home-stats .st-items {
+}
+
+.home-stats .st-items {
     background-color: #d35400;
- }
- .home-stats .st-comments {
+}
+
+.home-stats .st-comments {
     background-color: #8e44ad;
- }
- .latest{
+}
+
+.latest {
     margin-top: 30px;
- }
-.latest-users{
+}
+
+.latest .toggle-info {
+    color: #999;
+    cursor: pointer;
+}
+
+.latest .toggle-info:hover {
+    color: #444;
+}
+
+.latest-users {
     margin-bottom: 0;
 }
- 
+
 .latest-users li {
     padding: 10px;
     overflow: hidden;
 }
-.latest-users li:nth-child(odd){
+
+.latest-users li:nth-child(odd) {
     background-color: #eee;
 }
+
 .latest-users .btn-success,
-.latest-users .btn-info{
+.latest-users .btn-info {
     padding: 2px 8px;
 }
-.latest-users .btn-info{
+
+.latest-users .btn-info {
     margin-right: 5px;
 }
+
 /* End Dashboard Page */
 
 /* Start login form */
 
-.login{
+.login {
     width: 300px;
     margin: 100px auto;
 }
+
 .login input {
-    margin-bottom:10px ;
+    margin-bottom: 10px;
 }
-.login .form-control{
+
+.login .form-control {
     background-color: #e5e5e5;
 }
+
 .login .btn {
     background-color: #008dde;
 }
-.login h4{
+
+.login h4 {
     color: #888;
 }
+
 /* End login form */
 
 
@@ -94,102 +136,124 @@ background-color: #f4f4f4;
     margin-bottom: 0;
 }
 
-.nav>li>a,.navbar-brand{
+.nav>li>a,
+.navbar-brand {
     padding: 15px 12px;
 }
 
-.navbar-brand{
+.navbar-brand {
     font-size: 1em;
 }
+
 .navbar-inverse .navbar-brand .open>a,
 .navbar-inverse .navbar-brand .open>a:focus,
 .navbar-inverse .navbar-brand .open>a:hover,
-.dropdown-menu{
+.dropdown-menu {
     background-color: #3498db;
 }
-.dropdown-menu{
+
+.dropdown-menu {
     min-width: 180px;
     padding: 0;
     font-size: 1em;
     border: none;
     border-radius: 0;
 }
-.dropdown-menu > li > a:focus,
-.dropdown-menu > li > a:hover{
+
+.dropdown-menu>li>a:focus,
+.dropdown-menu>li>a:hover {
     color: #fff;
     background-color: #8e44ad;
 }
+
 .form-control {
     position: relative;
 }
+
 /* End bpptstrap  Edits */
 /* Start members page */
-h1{
+h1 {
     font-size: 55px;
     margin: 40px;
     font-weight: bold;
     color: #666;
 }
-.show-pass{
+
+.show-pass {
     position: absolute;
     top: 6px;
     right: -30;
 
 }
-.main-table{
-    -webkit-box-shadow:0 3px 10px #ccc;
-    -moz-box-shadow:0 3px 10px #ccc;
-    box-shadow:0 3px 10px #ccc;
+
+.main-table {
+    -webkit-box-shadow: 0 3px 10px #ccc;
+    -moz-box-shadow: 0 3px 10px #ccc;
+    box-shadow: 0 3px 10px #ccc;
 }
-.main-table td{
+
+.main-table td {
     background-color: #fff;
     vertical-align: middle !important;
 }
-.main-table tr:first-child td{
+
+.main-table tr:first-child td {
     background-color: #333;
     color: #fff;
 }
-.main-table .btn{
+
+.main-table .btn {
     padding: 3px 10px;
 }
-.h2{
+
+.h2 {
     color: #333;
 }
-.activate{
+
+.activate {
     margin-left: 5px;
 }
+
 /* Start Categoreis Page */
 
-.categories .panel-heading{
+.categories .panel-heading {
     color: #959595;
     font-weight: bold;
-}   
-.categories .panel-body{
+}
+
+.categories .panel-body {
     padding: 0;
-}   
-.categories .option a{
-    color:#888;
+}
+
+.categories .option a {
+    color: #888;
     text-decoration: none;
 }
-.categories .option span{
-    color:#888;
+
+.categories .option span {
+    color: #888;
     cursor: pointer;
 }
-.categories .option .active{
-    color:#f00;
+
+.categories .option .active {
+    color: #f00;
 
 }
+
 .categories .cat {
     padding: 15px;
     position: relative;
     overflow: hidden;
 }
-.categories .cat:hover .hidden-buttons{
+
+.categories .cat:hover .hidden-buttons {
     right: 10px;
 }
+
 .categories .cat:hover {
     background-color: #eee;
 }
+
 .categories .cat .hidden-buttons {
     -webkit-transition: all .5s ease-in-out;
     -moz-transition: all .5s ease-in-out;
@@ -198,26 +262,32 @@ h1{
     top: 15px;
     right: -125px;
 }
-.categories .cat .hidden-buttons a{
+
+.categories .cat .hidden-buttons a {
     margin-right: 5px;
 }
-.categories .cat h3{
+
+.categories .cat h3 {
     margin: 0px;
     cursor: pointer;
     font-weight: bold;
     color: #6A6A6A;
 }
-.categories .cat .full-view p{
+
+.categories .cat .full-view p {
     margin: 10px 0;
     color: #707070;
 }
-.categories hr{
+
+.categories hr {
     margin-top: 0px;
     margin-bottom: 0px;
 }
-.categories .cat:last-of-type ~ hr{
+
+.categories .cat:last-of-type~hr {
     display: none;
 }
+
 .categories .cat .visibility {
     background-color: #34495e;
     color: #fff;
@@ -225,22 +295,26 @@ h1{
     margin-right: 6px;
     border-radius: 5px;
 }
-.categories .cat .commenting{
+
+.categories .cat .commenting {
     background-color: #2ecc71;
     color: #fff;
     padding: 4px 6px;
     margin-right: 6px;
     border-radius: 5px
 }
-.categories .cat .advertises{
+
+.categories .cat .advertises {
     background-color: #c0392b;
     color: #fff;
     padding: 4px 6px;
     margin-right: 6px;
     border-radius: 5px
 }
-.categories .add-category{
+
+.categories .add-category {
     margin-bottom: 30px;
     margin-top: -10px;
 }
+
 /* End Categoreis Page */

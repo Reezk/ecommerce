@@ -17,6 +17,7 @@ function lang($phrase)
         'ADMIN_LOGIN'      => 'Admin Login',
         'PASSWORD'         => 'Password',
         'USERNAME'         => 'Username',
+        'COMMENTS'         => 'Comments',
 
     );
     return $lang[$phrase];

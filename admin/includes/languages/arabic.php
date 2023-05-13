@@ -12,6 +12,7 @@ function lang($phrase)
         'ADMIN_LOGIN' => 'ادخل كأدمن',
         'PASSWORD' => 'كلمة المرور',
         'USERNAME' => 'اسم المستخدم',
+        'COMMENTS' => 'التعليقات',
 
     );
     return $lang[$phrase];
