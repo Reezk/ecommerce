@@ -291,10 +291,10 @@ if (isset($_SESSION['Username'])) {
             $stmt->bindParam(":zuser", $userid);
             $stmt->execute();
             $successMsg =  '<div class="alert alert-success text-center">' . $stmt->rowCount() . ' Record Deleted</div>';
-            redirectHome($successMsg,  6);
+            redirectHome($successMsg, 'back');
         } else {
             $errorMsg = '<div class="alert alert-danger text-center"> The ID Is not Exist</div>';;
-            redirectHome($errorMsg,  6);
+            redirectHome($errorMsg);
         }
         echo "</div>";
     } elseif ($do == "Activate") {

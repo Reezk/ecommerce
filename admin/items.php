@@ -393,8 +393,52 @@ if (isset($_SESSION['Username'])) {
                     </div>
                     <!-- End button  Filed -->
                 </form>
-        </div>
-<?php
+                <?php
+                $stmt = $con->prepare("SELECT
+                comments.*,users.Username AS member
+                FROM
+                comments
+                INNER JOIN
+                users
+                ON
+                users.userID = comments.user_ID
+                WHERE
+                item_ID = ?");
+                $stmt->execute(array($itemid));
+                $rows = $stmt->fetchAll();
+                if (!empty($rows)) {
+                ?>
+                    <h1 class="text-center">Manage [<?php echo $item['Name'] ?>] Comments</h1>
+                    <div class="container">
+                        <div class="tabel-responsive">
+                            <table class="main-table text-center table table-bordered">
+                                <tr>
+                                    <td>Comments</td>
+                                    <td>User Name</td>
+                                    <td>Added Date</td>
+                                    <td>Control</td>
+                                </tr>
+                                <?php foreach ($rows as  $row) {
+                                    echo '
+                        <tr>
+                            <td>' . $row['comment'] . '</td>
+                            <td>' . $row['member'] . '</td>
+                            <td>' . $row['commDate'] . '</td>
+                            <td>
+                                <a class="btn btn-success" href="comments.php?do=Edit&commid=' . $row['commID'] . '"><i class ="fa fa-edit"></i> Edit</a>
+                                <a class="btn btn-danger confirm" href="comments.php?do=Delete&commid=' . $row['commID'] . '"><i class ="fa fa-close"></i> Delete</a>';
+                                    if ($row['status'] == 0) {
+                                        echo '<a class="btn btn-info activate" href="comments.php?do=Approve&commid=' . $row['commID'] . '"><i class="fa fa-check"></i> Approve</a>';
+                                    }
+                                    echo '</td>
+                        </tr>
+                        ';
+                                } ?>
+                            </table>
+                        </div>
+                    </div>
+    <?php
+                }
             }
         } elseif ($do == 'Update') {
             echo "<h1 class = 'text-center'>Update Item</h1>";

@@ -5,11 +5,12 @@ if (isset($_SESSION['Username'])) {
     $pageTitel = 'Dashboard';
     include 'init.php';
 
-    $numUsers = 6; //Number Of Latest Users
+    $numUsers = 2; //Number Of Latest Users
     $latestUsers = getLatest('*', 'users', 'UserID', $numUsers); // Latest Users Array
-    $numItems = 3; //Number Of Latest Items
+    $numItems = 2; //Number Of Latest Items
     $latestItems = getLatest('*', 'items', 'ItemID', $numItems); // Latest Items Array
-
+    $numComm = 3; //Number Of Latest Items
+    // $latestComm = getLatest('*', 'comments', 'commID', $numComm); // Latest cOMMENTS Array
     /* Start Dashboard Page */
 ?>
     <div class="home-stats">
@@ -57,7 +58,10 @@ if (isset($_SESSION['Username'])) {
                         <i class="fa fa-comments"></i>
                         <div class="info">
                             Total Comments
-                            <span>40</span>
+                            <span>
+                                <a href="comments.php"><?php echo countItem('commID', 'comments'); ?></a>
+
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -126,6 +130,40 @@ if (isset($_SESSION['Username'])) {
 
                                 ?>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Start Comment -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="far fa-comments"></i> Latest <?php echo $numComm ?> Comments Users
+                            <span class="toggle-info pull-right">
+                                <i class="fa fa-plus fa-lg"></i>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            <?php
+                            $stmt = $con->prepare("SELECT
+                            comments.*,users.Username AS member
+                            FROM
+                            comments
+                            INNER JOIN
+                            users
+                            ON
+                            users.userID = comments.user_ID LIMIT $numComm ");
+                            $stmt->execute();
+                            $comments = $stmt->fetchAll();
+
+                            foreach ($comments as $comment) {
+                                echo '<div class = "comments-box">';
+                                echo '<span class="member-name"> ' . $comment['member'] . '</span>';
+                                echo '<p class="member-comm"> ' . $comment['comment'] . '</p>';
+                                echo '</div>';
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
