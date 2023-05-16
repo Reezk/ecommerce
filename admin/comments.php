@@ -28,44 +28,52 @@ if (isset($_SESSION['Username'])) {
                                 INNER JOIN
                                 users
                                 ON
-                                users.userID = comments.user_ID");
+                                users.userID = comments.user_ID
+                                ORDER BY commID DESC");
         $stmt->execute();
-        $rows = $stmt->fetchAll();
+        $comments = $stmt->fetchAll();
+        if (!empty($comments)) {
+
 ?>
-        <h1 class="text-center">Manage Comments</h1>
-        <div class="container">
-            <div class="tabel-responsive">
-                <table class="main-table text-center table table-bordered">
-                    <tr>
-                        <td>#ID</td>
-                        <td>Comments</td>
-                        <td>Item Name</td>
-                        <td>User Name</td>
-                        <td>Added Date</td>
-                        <td>Control</td>
-                    </tr>
-                    <?php foreach ($rows as  $row) {
-                        echo '
+            <h1 class="text-center">Manage Comments</h1>
+            <div class="container">
+                <div class="tabel-responsive">
+                    <table class="main-table text-center table table-bordered">
                         <tr>
-                            <td>' . $row['commID'] . '</td>
-                            <td>' . $row['comment'] . '</td>
-                            <td>' . $row['item_name'] . '</td>
-                            <td>' . $row['member'] . '</td>
-                            <td>' . $row['commDate'] . '</td>
+                            <td>#ID</td>
+                            <td>Comments</td>
+                            <td>Item Name</td>
+                            <td>User Name</td>
+                            <td>Added Date</td>
+                            <td>Control</td>
+                        </tr>
+                        <?php foreach ($comments as  $comment) {
+                            echo '
+                        <tr>
+                            <td>' . $comment['commID'] . '</td>
+                            <td>' . $comment['comment'] . '</td>
+                            <td>' . $comment['item_name'] . '</td>
+                            <td>' . $comment['member'] . '</td>
+                            <td>' . $comment['commDate'] . '</td>
                             <td>
-                                <a class="btn btn-success" href="comments.php?do=Edit&commid=' . $row['commID'] . '"><i class ="fa fa-edit"></i> Edit</a>
-                                <a class="btn btn-danger confirm" href="comments.php?do=Delete&commid=' . $row['commID'] . '"><i class ="fa fa-close"></i> Delete</a>';
-                        if ($row['status'] == 0) {
-                            echo '<a class="btn btn-info activate" href="comments.php?do=Approve&commid=' . $row['commID'] . '"><i class="fa fa-check"></i> Approve</a>';
-                        }
-                        echo '</td>
+                                <a class="btn btn-success" href="comments.php?do=Edit&commid=' . $comment['commID'] . '"><i class ="fa fa-edit"></i> Edit</a>
+                                <a class="btn btn-danger confirm" href="comments.php?do=Delete&commid=' . $comment['commID'] . '"><i class ="fa fa-close"></i> Delete</a>';
+                            if ($comment['status'] == 0) {
+                                echo '<a class="btn btn-info activate" href="comments.php?do=Approve&commid=' . $comment['commID'] . '"><i class="fa fa-check"></i> Approve</a>';
+                            }
+                            echo '</td>
                         </tr>
                         ';
-                    } ?>
-                </table>
+                        } ?>
+                    </table>
+                </div>
             </div>
-        </div>
-    <?php
+        <?php
+        } else {
+            echo '<div class = "container">';
+            echo '<div class="nice-message">There\' No Comments To Show</div>';
+            echo '</div>';
+        }
     } elseif ($do == 'Edit') {
 
         $commid = (isset($_GET['commid']) && is_numeric($_GET['commid'])) ? intval($_GET['commid']) : 0;
@@ -74,7 +82,7 @@ if (isset($_SESSION['Username'])) {
         $row = $stmt->fetch();
         $count = $stmt->rowCount();
 
-    ?>
+        ?>
         <h1 class="text-center">Edite Comment</h1>
         <div class="container">
             <?php if ($stmt->rowCount() > 0) { ?>

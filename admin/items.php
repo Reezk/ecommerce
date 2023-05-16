@@ -13,29 +13,33 @@ if (isset($_SESSION['Username'])) {
     $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
     if ($do == 'Manage') {
 
-        $stmt = $con->prepare("SELECT items.*, categories.Name AS categoru_name,users.Username AS user_name
-        FROM items 
-        INNER JOIN categories ON categories.ID = items.CatID
-        INNER JOIN users ON users.UserID = items.MemberID");
+        $stmt = $con->prepare("SELECT items.*, categories.Name AS categoru_name,
+                                users.Username AS user_name
+                                FROM items 
+                                INNER JOIN categories ON categories.ID = items.CatID
+                                INNER JOIN users ON users.UserID = items.MemberID
+                                ORDER BY itemID DESC");
         $stmt->execute();
         $items = $stmt->fetchAll();
+
+        if (!empty($items)) {
 ?>
-        <h1 class="text-center">Manage Items</h1>
-        <div class="container">
-            <div class="tabel-responsive">
-                <table class="main-table text-center table table-bordered">
-                    <tr>
-                        <td>#ID</td>
-                        <td>Name</td>
-                        <td>Description</td>
-                        <td>Price</td>
-                        <td>Adding Data</td>
-                        <td>Category</td>
-                        <td>Username</td>
-                        <td>Control</td>
-                    </tr>
-                    <?php foreach ($items as  $item) {
-                        echo '
+            <h1 class="text-center">Manage Items</h1>
+            <div class="container">
+                <div class="tabel-responsive">
+                    <table class="main-table text-center table table-bordered">
+                        <tr>
+                            <td>#ID</td>
+                            <td>Name</td>
+                            <td>Description</td>
+                            <td>Price</td>
+                            <td>Adding Data</td>
+                            <td>Category</td>
+                            <td>Username</td>
+                            <td>Control</td>
+                        </tr>
+                        <?php foreach ($items as  $item) {
+                            echo '
                         <tr>
                             <td>' . $item['ItemID'] . '</td>
                             <td>' . $item['Name'] . '</td>
@@ -47,20 +51,26 @@ if (isset($_SESSION['Username'])) {
                             <td>
                                 <a class="btn btn-success" href="items.php?do=Edit&itemid=' . $item['ItemID'] . '"><i class ="fa fa-edit"></i> Edit</a>
                                 <a class="btn btn-danger confirm" href="items.php?do=Delete&itemid=' . $item['ItemID'] . '"><i class ="fa fa-close"></i> Delete</a>';
-                        if ($item['Approve'] == 0) {
-                            echo '<a class="btn btn-info activate" href="items.php?do=Approve&itemid=' . $item['ItemID'] . '"><i class="fa fa-check"></i> Approve</a>';
-                        };
-                        echo '</td>
+                            if ($item['Approve'] == 0) {
+                                echo '<a class="btn btn-info activate" href="items.php?do=Approve&itemid=' . $item['ItemID'] . '"><i class="fa fa-check"></i> Approve</a>';
+                            };
+                            echo '</td>
                         </tr>
                         ';
-                    } ?>
-                </table>
+                        } ?>
+                    </table>
+                </div>
+                <a class="btn btn-sm btn-success" href="items.php?do=Add"><i class="fa fa-plus"></i> New Item</a>
             </div>
-            <a class="btn btn-sm btn-success" href="items.php?do=Add"><i class="fa fa-plus"></i> New Item</a>
-        </div>
-    <?php
+        <?php
+        } else {
+            echo '<div class = "container">';
+            echo '<div class="nice-message">There\' No Items To Show</div>';
+            echo '<a class="btn btn-sm btn-success" href="items.php?do=Add"><i class="fa fa-plus"></i> New Item</a>';
+            echo '</div>';
+        }
     } elseif ($do == 'Add') {
-    ?>
+        ?>
         <h1 class="text-center">Add New Item</h1>
         <div class="container">
             <form action="?do=Insert" method="POST" class="form-horizontal">

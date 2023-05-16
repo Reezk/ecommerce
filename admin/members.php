@@ -19,24 +19,26 @@ if (isset($_SESSION['Username'])) {
         if (isset($_GET['page']) && $_GET['page'] == 'Pending') {
             $query = ' AND RegStatus = 0';
         }
-        $stmt = $con->prepare("SELECT * FROM users WHERE GroupID !=1 $query");
+        $stmt = $con->prepare("SELECT * FROM users 
+        WHERE GroupID !=1 ORDER BY Date DESC $query ");
         $stmt->execute();
         $rows = $stmt->fetchAll();
+        if (!empty($rows)) {
 ?>
-        <h1 class="text-center">Manage Members</h1>
-        <div class="container">
-            <div class="tabel-responsive">
-                <table class="main-table text-center table table-bordered">
-                    <tr>
-                        <td>#ID</td>
-                        <td>Username</td>
-                        <td>Email</td>
-                        <td>Full Name</td>
-                        <td>Registed Date</td>
-                        <td>Control</td>
-                    </tr>
-                    <?php foreach ($rows as  $row) {
-                        echo '
+            <h1 class="text-center">Manage Members</h1>
+            <div class="container">
+                <div class="tabel-responsive">
+                    <table class="main-table text-center table table-bordered">
+                        <tr>
+                            <td>#ID</td>
+                            <td>Username</td>
+                            <td>Email</td>
+                            <td>Full Name</td>
+                            <td>Registed Date</td>
+                            <td>Control</td>
+                        </tr>
+                        <?php foreach ($rows as  $row) {
+                            echo '
                         <tr>
                             <td>' . $row['UserID'] . '</td>
                             <td>' . $row['Username'] . '</td>
@@ -46,18 +48,25 @@ if (isset($_SESSION['Username'])) {
                             <td>
                                 <a class="btn btn-success" href="members.php?do=Edit&userid=' . $row['UserID'] . '"><i class ="fa fa-edit"></i> Edit</a>
                                 <a class="btn btn-danger confirm" href="members.php?do=Delete&userid=' . $row['UserID'] . '"><i class ="fa fa-close"></i> Delete</a>';
-                        if ($row['RegStatus'] == 0) {
-                            echo '<a class="btn btn-info activate" href="members.php?do=Activate&userid=' . $row['UserID'] . '"><i class="fa fa-check"></i> Activate</a>';
-                        }
-                        echo '</td>
+                            if ($row['RegStatus'] == 0) {
+                                echo '<a class="btn btn-info activate" href="members.php?do=Activate&userid=' . $row['UserID'] . '"><i class="fa fa-check"></i> Activate</a>';
+                            }
+                            echo '</td>
                         </tr>
                         ';
-                    } ?>
-                </table>
+                        } ?>
+                    </table>
+                </div>
+                <a class="btn btn-success" href="members.php?do=Add"><i class="fa fa-plus"></i> New Memeber</a>
             </div>
-            <a class="btn btn-success" href="members.php?do=Add"><i class="fa fa-plus"></i> New Memeber</a>
-        </div>
-    <?php
+        <?php
+        } else {
+            echo '<div class = "container">';
+            echo '<div class="nice-message">There\' No Members To Show</div>';
+
+            echo '<a class="btn btn-success" href="members.php?do=Add"><i class="fa fa-plus"></i> New Memeber</a>';
+            echo '</div>';
+        }
     } elseif ($do == 'Add') { ?>
 
 
@@ -267,11 +276,21 @@ if (isset($_SESSION['Username'])) {
             foreach ($formErrors as $error) {
                 echo $error . ' <br/>';
             }
-            $stmt = $con->prepare("UPDATE users SET Username=? , Email = ?, FullName=?,Password = ? WHERE UserID = ?");
-            $stmt->execute(array($username, $email, $fullname, $pass, $id));
+            if (empty($formErrors)) {
+                $stmt2 = $con->prepare("SELECT * FROM users WHERE Username = ? AND UserID != ?");
+                $stmt2->execute(array($username, $id));
+                $count = $stmt2->rowCount();
+                if ($count == 1) {
+                    echo '<div class="alert alert-danger text-center">Sorry This User Is Exist</div>';
+                    redirectHome($successMsg,  3);
+                } else {
+                    $stmt = $con->prepare("UPDATE users SET Username=? , Email = ?, FullName=?,Password = ? WHERE UserID = ?");
+                    $stmt->execute(array($username, $email, $fullname, $pass, $id));
 
-            $successMsg =  '<div class="alert alert-success text-center">' . $stmt->rowCount() . ' Record Update</div>';
-            redirectHome($successMsg,  50);
+                    $successMsg =  '<div class="alert alert-success text-center">' . $stmt->rowCount() . ' Record Update</div>';
+                    redirectHome($successMsg,  3);
+                }
+            }
         } else {
             $errorMsg =  '<div class="alert alert-danger text-center">You Cant Browser The Pge Directly</div>';
             redirectHome($errorMsg,  3);

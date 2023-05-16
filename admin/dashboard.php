@@ -6,9 +6,9 @@ if (isset($_SESSION['Username'])) {
     include 'init.php';
 
     $numUsers = 2; //Number Of Latest Users
-    $latestUsers = getLatest('*', 'users', 'UserID', $numUsers); // Latest Users Array
+    $latestUsers = getLatest('*', 'users', 'Date', $numUsers); // Latest Users Array
     $numItems = 2; //Number Of Latest Items
-    $latestItems = getLatest('*', 'items', 'ItemID', $numItems); // Latest Items Array
+    $latestItems = getLatest('*', 'items', 'AddDate', $numItems); // Latest Items Array
     $numComm = 3; //Number Of Latest Items
     // $latestComm = getLatest('*', 'comments', 'commID', $numComm); // Latest cOMMENTS Array
     /* Start Dashboard Page */
@@ -82,20 +82,25 @@ if (isset($_SESSION['Username'])) {
                         <div class="panel-body">
                             <ul class="list-unstyled latest-users">
                                 <?php
-                                foreach ($latestUsers as $user) {
-                                    echo '<li>' . $user['Username'] . '
-                                            <a href="members.php?do=Edit&userid=' . $user['UserID'] . '">
-                                            <span class = "btn btn-success pull-right">
-                                                <i class="fa fa-edit"></i>
-                                                    Edit
-                                            </span>
-                                            </a> ';
-                                    if ($user['RegStatus'] == 0) {
-                                        echo '<a class="btn btn-info activate  pull-right" href="members.php?do=Activate&userid=' . $user['UserID'] . '">
-                                        <i class="far fa-hourglass-half "></i> Activate</a>';
+                                if (!empty($latestUsers)) {
+                                    foreach ($latestUsers as $user) {
+                                        echo '<li>' . $user['Username'] . '
+                                                <a href="members.php?do=Edit&userid=' . $user['UserID'] . '">
+                                                <span class = "btn btn-success pull-right">
+                                                    <i class="fa fa-edit"></i>
+                                                        Edit
+                                                </span>
+                                                </a> ';
+                                        if ($user['RegStatus'] == 0) {
+                                            echo '<a class="btn btn-info activate  pull-right" href="members.php?do=Activate&userid=' . $user['UserID'] . '">
+                                            <i class="far fa-hourglass-half "></i> Activate</a>';
+                                        }
+                                        echo '</li>';
                                     }
-                                    echo '</li>';
+                                } else {
+                                    echo 'Thire\'s No Users To Show ';
                                 }
+
 
                                 ?>
                             </ul>
@@ -113,20 +118,25 @@ if (isset($_SESSION['Username'])) {
                         <div class="panel-body">
                             <ul class="list-unstyled latest-users">
                                 <?php
-                                foreach ($latestItems as $item) {
-                                    echo '<li>' . $item['Name'] . '
-                                            <a href="items.php?do=Edit&itemid=' . $item['ItemID'] . '">
-                                            <span class = "btn btn-success pull-right">
-                                                <i class="fa fa-edit"></i>
-                                                    Edit
-                                            </span>
-                                            </a> ';
-                                    if ($item['Approve'] == 0) {
-                                        echo '<a class="btn btn-info activate  pull-right" href="items.php?do=Approve&itemid=' . $item['ItemID'] . '">
-                                        <i class="fa fa-check "></i> Approve</a>';
+                                if (!empty($latestItems)) {
+                                    foreach ($latestItems as $item) {
+                                        echo '<li>' . $item['Name'] . '
+                                                <a href="items.php?do=Edit&itemid=' . $item['ItemID'] . '">
+                                                <span class = "btn btn-success pull-right">
+                                                    <i class="fa fa-edit"></i>
+                                                        Edit
+                                                </span>
+                                                </a> ';
+                                        if ($item['Approve'] == 0) {
+                                            echo '<a class="btn btn-info activate  pull-right" href="items.php?do=Approve&itemid=' . $item['ItemID'] . '">
+                                            <i class="fa fa-check "></i> Approve</a>';
+                                        }
+                                        echo '</li>';
                                     }
-                                    echo '</li>';
+                                } else {
+                                    echo 'Thire\'s No Items To Show ';
                                 }
+
 
                                 ?>
                             </ul>
@@ -147,22 +157,26 @@ if (isset($_SESSION['Username'])) {
                         <div class="panel-body">
                             <?php
                             $stmt = $con->prepare("SELECT
-                            comments.*,users.Username AS member
+                            comments.*,users.Username AS member,users.UserID AS member_id
                             FROM
                             comments
                             INNER JOIN
                             users
                             ON
-                            users.userID = comments.user_ID LIMIT $numComm ");
+                            users.userID = comments.user_ID ORDER BY commID DESC LIMIT $numComm ");
                             $stmt->execute();
                             $comments = $stmt->fetchAll();
-
-                            foreach ($comments as $comment) {
-                                echo '<div class = "comments-box">';
-                                echo '<span class="member-name"> ' . $comment['member'] . '</span>';
-                                echo '<p class="member-comm"> ' . $comment['comment'] . '</p>';
-                                echo '</div>';
+                            if (!empty($comments)) {
+                                foreach ($comments as $comment) {
+                                    echo '<div class = "comments-box">';
+                                    echo '<span class="member-name"> <a href="members.php?do=Edit&userid=' . $comment['member_id'] . '">' . $comment['member'] . '</a></span>';
+                                    echo '<p class="member-comm"> ' . $comment['comment'] . '</p>';
+                                    echo '</div>';
+                                }
+                            } else {
+                                echo 'Thire\'s No Comments To Show ';
                             }
+
                             ?>
                         </div>
                     </div>
