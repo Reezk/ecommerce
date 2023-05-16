@@ -36,7 +36,7 @@ if (isset($_SESSION['Username'])) {
 
 ?>
             <h1 class="text-center">Manage Comments</h1>
-            <div class="container">
+            < class="container">
                 <div class="tabel-responsive">
                     <table class="main-table text-center table table-bordered">
                         <tr>
@@ -67,13 +67,13 @@ if (isset($_SESSION['Username'])) {
                         } ?>
                     </table>
                 </div>
-            </div>
-        <?php
+            <?php
         } else {
             echo '<div class = "container">';
             echo '<div class="nice-message">There\' No Comments To Show</div>';
             echo '</div>';
         }
+        echo '</div>';
     } elseif ($do == 'Edit') {
 
         $commid = (isset($_GET['commid']) && is_numeric($_GET['commid'])) ? intval($_GET['commid']) : 0;
@@ -82,42 +82,42 @@ if (isset($_SESSION['Username'])) {
         $row = $stmt->fetch();
         $count = $stmt->rowCount();
 
+            ?>
+            <h1 class="text-center">Edite Comment</h1>
+            <div class="container">
+                <?php if ($stmt->rowCount() > 0) { ?>
+                    <form action="?do=Update" method="POST" class="form-horizontal">
+                        <input type="hidden" name="commid" value="<?php echo $commid ?>">
+                        <!-- Start Comment Filed -->
+                        <div class="form-group">
+                            <label for="" class="col-sm-2 control-label">Comment</label>
+                            <div class="col-sm-10 col-md-6">
+                                <!-- <input type="text" name="comment" class="form-control " value="<?php echo $row['comment'] ?>" autocomplete="off" required='required'> -->
+                                <textarea name="comment" class="form-control"><?php echo $row['comment'] ?></textarea>
+                            </div>
+                        </div>
+                        <!-- End Comment Filed -->
+
+                        <!-- Start button save Filed -->
+                        <div class=" form-group">
+                            <div class="col-sm-offset-2 col-sm-10 ">
+                                <input type="submit" value="save" class="btn btn-primary">
+                            </div>
+                        </div>
+                        <!-- End button save Filed -->
+                    </form>
+
+
+
+
+            </div>
+
+        <?php
+                } else {
+                    $errorMsg = '<div class="alert alert-danger text-center"> There Is No such ID</div>';
+                    redirectHome($errorMsg,  6);
+                }
         ?>
-        <h1 class="text-center">Edite Comment</h1>
-        <div class="container">
-            <?php if ($stmt->rowCount() > 0) { ?>
-                <form action="?do=Update" method="POST" class="form-horizontal">
-                    <input type="hidden" name="commid" value="<?php echo $commid ?>">
-                    <!-- Start Comment Filed -->
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">Comment</label>
-                        <div class="col-sm-10 col-md-6">
-                            <!-- <input type="text" name="comment" class="form-control " value="<?php echo $row['comment'] ?>" autocomplete="off" required='required'> -->
-                            <textarea name="comment" class="form-control"><?php echo $row['comment'] ?></textarea>
-                        </div>
-                    </div>
-                    <!-- End Comment Filed -->
-
-                    <!-- Start button save Filed -->
-                    <div class=" form-group">
-                        <div class="col-sm-offset-2 col-sm-10 ">
-                            <input type="submit" value="save" class="btn btn-primary">
-                        </div>
-                    </div>
-                    <!-- End button save Filed -->
-                </form>
-
-
-
-
-        </div>
-
-    <?php
-            } else {
-                $errorMsg = '<div class="alert alert-danger text-center"> There Is No such ID</div>';
-                redirectHome($errorMsg,  6);
-            }
-    ?>
 <?php
     } elseif ($do == 'Update') {
         echo "<h1 class = 'text-center'>Update Members</h1>";

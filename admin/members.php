@@ -58,8 +58,7 @@ if (isset($_SESSION['Username'])) {
                     </table>
                 </div>
                 <a class="btn btn-success" href="members.php?do=Add"><i class="fa fa-plus"></i> New Memeber</a>
-            </div>
-        <?php
+            <?php
         } else {
             echo '<div class = "container">';
             echo '<div class="nice-message">There\' No Members To Show</div>';
@@ -67,56 +66,57 @@ if (isset($_SESSION['Username'])) {
             echo '<a class="btn btn-success" href="members.php?do=Add"><i class="fa fa-plus"></i> New Memeber</a>';
             echo '</div>';
         }
+        echo '</div>';
     } elseif ($do == 'Add') { ?>
 
 
-        <h1 class="text-center">Add New Member</h1>
-        <div class="container">
-            <form action="?do=Insert" method="POST" class="form-horizontal">
-                <!-- Start Usename Filed -->
-                <div class="form-group">
-                    <label for="" class="col-sm-2 control-label">Username</label>
-                    <div class="col-sm-10 col-md-6">
-                        <input type="text" name="username" class="form-control" autocomplete="off" placeholder="User Name to Login Shop" required='required'>
+            <h1 class="text-center">Add New Member</h1>
+            <div class="container">
+                <form action="?do=Insert" method="POST" class="form-horizontal">
+                    <!-- Start Usename Filed -->
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Username</label>
+                        <div class="col-sm-10 col-md-6">
+                            <input type="text" name="username" class="form-control" autocomplete="off" placeholder="User Name to Login Shop" required='required'>
+                        </div>
                     </div>
-                </div>
-                <!-- End Usename Filed -->
-                <!-- Start Password Filed -->
-                <div class="form-group">
-                    <label for="" class="col-sm-2 control-label">Password</label>
-                    <div class="col-sm-10 col-md-6">
-                        <input type="password" name="password" class="form-control" placeholder="Password Must Be Hard & Complex" required='required'>
-                        <i class="show-pass fa fa-eye fa-2x"></i>
+                    <!-- End Usename Filed -->
+                    <!-- Start Password Filed -->
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Password</label>
+                        <div class="col-sm-10 col-md-6">
+                            <input type="password" name="password" class="form-control" placeholder="Password Must Be Hard & Complex" required='required'>
+                            <i class="show-pass fa fa-eye fa-2x"></i>
+                        </div>
                     </div>
-                </div>
-                <!-- End Pssword Filed -->
-                <!-- Start Email Filed -->
-                <div class="form-group">
-                    <label for="" class="col-sm-2 control-label">Email</label>
-                    <div class="col-sm-10 col-md-6">
-                        <input type="email" name="email" class="form-control" placeholder="Email Muste Be Valid" required='required'>
+                    <!-- End Pssword Filed -->
+                    <!-- Start Email Filed -->
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10 col-md-6">
+                            <input type="email" name="email" class="form-control" placeholder="Email Muste Be Valid" required='required'>
+                        </div>
                     </div>
-                </div>
-                <!-- End Email Filed -->
-                <!-- Start Full Name Filed -->
-                <div class="form-group">
-                    <label for="" class="col-sm-2 control-label">Full Name</label>
-                    <div class="col-sm-10 col-md-6">
-                        <input type="text" name="full" class="form-control" placeholder="Full Name Appear In Your Profile Page" required='required'>
+                    <!-- End Email Filed -->
+                    <!-- Start Full Name Filed -->
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Full Name</label>
+                        <div class="col-sm-10 col-md-6">
+                            <input type="text" name="full" class="form-control" placeholder="Full Name Appear In Your Profile Page" required='required'>
+                        </div>
                     </div>
-                </div>
-                <!-- End Full Name Filed -->
-                <!-- Start button save Filed -->
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10 ">
-                        <input type="submit" value="Add Member" class="btn btn-primary">
+                    <!-- End Full Name Filed -->
+                    <!-- Start button save Filed -->
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10 ">
+                            <input type="submit" value="Add Member" class="btn btn-primary">
+                        </div>
                     </div>
-                </div>
-                <!-- End button save Filed -->
-            </form>
-        </div>
+                    <!-- End button save Filed -->
+                </form>
+            </div>
 
-    <?php
+        <?php
     } elseif ($do == 'Insert') {
 
         echo "<div class = 'container'>";
@@ -190,60 +190,60 @@ if (isset($_SESSION['Username'])) {
         $row = $stmt->fetch();
         $count = $stmt->rowCount();
 
-    ?>
-        <h1 class="text-center">Edite Member</h1>
-        <div class="container">
-            <?php if ($stmt->rowCount() > 0) { ?>
-                <form action="?do=Update" method="POST" class="form-horizontal">
-                    <input type="hidden" name="userid" value="<?php echo $userid ?>">
-                    <!-- Start Usename Filed -->
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">Username</label>
-                        <div class="col-sm-10 col-md-6">
-                            <input type="text" name="username" class="form-control " value="<?php echo $row['Username'] ?>" autocomplete="off" required='required'>
+        ?>
+            <h1 class="text-center">Edite Member</h1>
+            <div class="container">
+                <?php if ($stmt->rowCount() > 0) { ?>
+                    <form action="?do=Update" method="POST" class="form-horizontal">
+                        <input type="hidden" name="userid" value="<?php echo $userid ?>">
+                        <!-- Start Usename Filed -->
+                        <div class="form-group">
+                            <label for="" class="col-sm-2 control-label">Username</label>
+                            <div class="col-sm-10 col-md-6">
+                                <input type="text" name="username" class="form-control " value="<?php echo $row['Username'] ?>" autocomplete="off" required='required'>
+                            </div>
                         </div>
-                    </div>
-                    <!-- End Usename Filed -->
-                    <!-- Start Password Filed -->
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">Password</label>
-                        <div class="col-sm-10 col-md-6">
-                            <input type="hidden" name="oldpassword" value="<?php echo $row['Password'] ?>">
-                            <input type="password" name="newpassword" class="form-control">
+                        <!-- End Usename Filed -->
+                        <!-- Start Password Filed -->
+                        <div class="form-group">
+                            <label for="" class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-10 col-md-6">
+                                <input type="hidden" name="oldpassword" value="<?php echo $row['Password'] ?>">
+                                <input type="password" name="newpassword" class="form-control">
+                            </div>
                         </div>
-                    </div>
-                    <!-- End Pssword Filed -->
-                    <!-- Start Email Filed -->
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">Email</label>
-                        <div class="col-sm-10 col-md-6">
-                            <input type="email" name="email" value="<?php echo $row['Email'] ?>" class="form-control" required='required'>
+                        <!-- End Pssword Filed -->
+                        <!-- Start Email Filed -->
+                        <div class="form-group">
+                            <label for="" class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10 col-md-6">
+                                <input type="email" name="email" value="<?php echo $row['Email'] ?>" class="form-control" required='required'>
+                            </div>
                         </div>
-                    </div>
-                    <!-- End Email Filed -->
-                    <!-- Start Full Name Filed -->
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">Full Name</label>
-                        <div class="col-sm-10 col-md-6">
-                            <input type="text" name="full" value="<?php echo $row['FullName'] ?>" class="form-control" required='required'>
+                        <!-- End Email Filed -->
+                        <!-- Start Full Name Filed -->
+                        <div class="form-group">
+                            <label for="" class="col-sm-2 control-label">Full Name</label>
+                            <div class="col-sm-10 col-md-6">
+                                <input type="text" name="full" value="<?php echo $row['FullName'] ?>" class="form-control" required='required'>
+                            </div>
                         </div>
-                    </div>
-                    <!-- End Full Name Filed -->
-                    <!-- Start button save Filed -->
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10 ">
-                            <input type="submit" value="save" class="btn btn-primary">
+                        <!-- End Full Name Filed -->
+                        <!-- Start button save Filed -->
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10 ">
+                                <input type="submit" value="save" class="btn btn-primary">
+                            </div>
                         </div>
-                    </div>
-                    <!-- End button save Filed -->
-                </form>
-        </div>
-    <?php
-            } else {
-                $errorMsg = '<div class="alert alert-danger text-center"> There Is No such ID</div>';
-                redirectHome($errorMsg,  6);
-            }
-    ?>
+                        <!-- End button save Filed -->
+                    </form>
+            </div>
+        <?php
+                } else {
+                    $errorMsg = '<div class="alert alert-danger text-center"> There Is No such ID</div>';
+                    redirectHome($errorMsg,  6);
+                }
+        ?>
 <?php
     } elseif ($do == 'Update') {
         echo "<h1 class = 'text-center'>Update Members</h1>";
