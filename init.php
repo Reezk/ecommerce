@@ -1,8 +1,15 @@
 <?php
 
+ini_set('display_errore', 'On');
+error_reporting(E_ALL);
 include 'admin/connect.php';
-//Routes
 
+$sessionUser = '';
+if (isset($_SESSION['user'])) {
+    $sessionUser = $_SESSION['user'];
+}
+
+//Routes
 $tpl = 'includes/templates/'; //Templet Dirctiory
 $lang = 'includes/languages/';
 $func = 'includes/functions/';
