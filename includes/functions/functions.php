@@ -21,7 +21,7 @@ function getCategories()
 
 
 
-function getItems($where,$value)
+function getItems($where, $value)
 {
     global $con;
 
@@ -41,6 +41,16 @@ function checkUserStatus($user)
     return $status;
 }
 
+//Chech Items Function
+//Function to Check Item In Database
+/* function checkItem($select, $from, $value)
+{
+    global $con;
+    $statment = $con->prepare("SELECT $select FROM $from WHERE $select =?");
+    $statment->execute(array($value));
+    $count = $statment->rowCount();
+    return $count;
+} */
 
 
 

@@ -29,4 +29,8 @@ $(function () {
   $(".confirm").click(function () {
     return confirm("Are You Sure");
   });
+  //live-preview
+  $(".live").keyup(function () {
+    $($(this).data("class")).text($(this).val());
+  });
 });

@@ -1,109 +1,139 @@
 /* Start Main Rulez */
 
 body {
-    background-color: #f4f4f4;
-    /* background-color: red; */
+   background-color: #f4f4f4;
+   /* background-color: red; */
 }
 
 h1 {
-    font-size: 55px;
-    margin: 40px;
-    font-weight: bold;
-    color: #666;
+   font-size: 55px;
+   margin: 40px;
+   font-weight: bold;
+   color: #666;
 }
 
 .input-container {
-    position: relative;
+   position: relative;
 }
 
 .asterisk {
-    font-size: 20px;
-    position: absolute;
-    right: 10px;
-    top: 8px;
-    color: #D20707;
+   font-size: 20px;
+   position: absolute;
+   right: 10px;
+   top: 8px;
+   color: #D20707;
+
+}
+
+.main-form .asterisk {
+   font-size: 30px;
+   position: absolute;
+   right: 30px;
+   top: 5px;
+   color: #D20707;
 
 }
 
 .nice-message {
-    padding: 10px;
-    background-color: #fff;
-    margin: 10px;
-    border-left: 5px solid #080;
+   padding: 10px;
+   background-color: #fff;
+   margin: 10px;
+   border-left: 5px solid #080;
 }
 
 /* End Main Rulez */
 
 /* Start bootstrap  Edits */
 .navbar {
-    border-radius: 0;
-    margin-bottom: 0;
+   border-radius: 0;
+   margin-bottom: 0;
 }
 
 .nav>li>a,
 .navbar-brand {
-    padding: 15px 12px;
+   padding: 15px 12px;
 }
 
 .navbar-brand {
-    font-size: 1em;
+   font-size: 1em;
 }
 
 .navbar-inverse .navbar-brand .open>a,
 .navbar-inverse .navbar-brand .open>a:focus,
 .navbar-inverse .navbar-brand .open>a:hover,
 .dropdown-menu {
-    background-color: #3498db;
+   background-color: #3498db;
 }
 
 .dropdown-menu {
-    min-width: 180px;
-    padding: 0;
-    font-size: 1em;
-    border: none;
-    border-radius: 0;
+   min-width: 180px;
+   padding: 0;
+   font-size: 1em;
+   border: none;
+   border-radius: 0;
 }
 
 .dropdown-menu>li>a:focus,
 .dropdown-menu>li>a:hover {
-    color: #fff;
-    background-color: #8e44ad;
+   color: #fff;
+   background-color: #8e44ad;
 }
 
 .form-control {
-    position: relative;
+   position: relative;
 }
 
 /* End bootstrap  Edits */
 
 /* Start login page */
-.login-page form {
-    max-width: 300px;
-    margin: auto;
+.login-page form,
+.the-errors {
+   max-width: 300px;
+   margin: auto;
 }
 
 .login-page form input {
-    margin-bottom: 5px;
+   margin-bottom: 5px;
 }
 
 .login-page [data-class='login'].selected {
-    color: #337ab7;
+   color: #337ab7;
 }
 
 .login-page [data-class='signup'].selected {
-    color: #5cb85c;
+   color: #5cb85c;
 }
 
 .login-page h1 {
-    color: #c0c0c0;
+   color: #c0c0c0;
 }
 
 .login-page h1 span {
-    cursor: pointer;
+   cursor: pointer;
 }
 
 .login-page .signup {
-    display: none;
+   display: none;
+}
+
+.the-errors .msg {
+   padding: 10px;
+   text-align: left;
+   border-left: 5px solid #cd6858;
+   background-color: #fff;
+   margin-bottom: 8px;
+   border-right: 1px solid #e0e0e0;
+   border-top: 1px #e0e0e0;
+   border-bottom: 1px #e0e0e0;
+   color: #919191;
+}
+
+.the-errors .error {
+   border-left: 5px solid #cd6858;
+}
+
+.the-errors .success {
+   border-left: 5px solid #080;
 }
 
 /* End login page */
@@ -111,8 +141,8 @@ h1 {
 
 /* Start Upper */
 .upper-bar {
-    padding: 10px;
-    background-color: #fff;
+   padding: 10px;
+   background-color: #fff;
 }
 
 /* End Upper */
@@ -120,23 +150,44 @@ h1 {
 
 /* start  Categories  page */
 .item-box {
-    position: relative;
+   position: relative;
 }
 
 .item-box .price-tag {
 
-    background-color: #b4b4b4;
-    padding: 2px 10px;
-    position: absolute;
-    left: 0;
-    top: 10px;
-    font-weight: bold;
-    color: #fff;
+   background-color: #b4b4b4;
+   padding: 2px 10px;
+   position: absolute;
+   left: 0;
+   top: 10px;
+   font-weight: bold;
+   color: #fff;
 }
 
 /* End Categories  page */
 
 /* Start Profil  page */
-.block {}
+
+.information {
+   margin-top: 20px;
+}
+
+.information ul {
+   padding: 0;
+   margin: 0;
+}
+
+.information ul li {
+   padding: 10px;
+}
+
+.information ul li:nth-child(odd) {
+   background-color: #eee;
+}
+
+.information ul li span {
+   display: inline-block;
+   width: 120px;
+}
 
 /* End Profil  page */
