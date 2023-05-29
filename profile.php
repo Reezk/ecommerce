@@ -42,24 +42,26 @@ if ($sessionUser) {
          </div>
       </div>
    </div>
-   <div class="my-ads block">
+   <div id="my-ads" class="my-ads block">
       <div class="container">
          <div class="panel panel-primary">
             <div class="panel-heading">My Ads</div>
             <div class="panel-body">
-
                <div class="row">
                   <?php
                   if (!empty(getItems('MemberID', $info['UserID']))) {
-                     foreach (getItems('MemberID', $info['UserID']) as $item) {
+                     foreach (getItems('MemberID', $info['UserID'], 1) as $item) {
                         echo '<div class = "col-sm-6 col-md-3">';
                         echo '<div class="thumbnail item-box">';
-                        echo '<span class="price-tag">' . $item['Price'] . '</span>';
-                        echo '<img class="img-responsive" src="images.png" alt="">';
+                        if ($item['Approve'] == 0) {
+                           echo '<span class="approve-status">Waiting Approval</span>';
+                        }
+                        echo '<span class="price-tag">$' . $item['Price'] . '</span>';
+                        echo '<img class="img-responsive" src="' . $img . 'images.png" alt="">';
                         echo '<div class="caption">';
-
-                        echo '<h3>' . $item['Name'] . '</h3>';
+                        echo '<h3><a href="items.php?itemid=' . $item['ItemID'] . '">' . $item['Name'] . '</a></h3>';
                         echo '<p>' . $item['Description'] . '</p>';
+                        echo '<p class ="date">' . $item['AddDate'] . '</p>';
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';

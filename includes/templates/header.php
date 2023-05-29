@@ -16,11 +16,22 @@
    <div class="upper-bar">
       <div class="container">
          <?php
-         if (isset($_SESSION['user'])) {
-            echo 'welcom ' . $sessionUser . ' ';
-            echo '<a href="profile.php">My Profile</a>' . ' ';
-            echo '- <a href="logout.php">Logout</a>';
-            echo '- <a href="newad.php">New Ad</a>';
+         if (isset($_SESSION['user'])) { ?>
+            <img src="<?php echo $img ?>/images.png" class="my-img img-thumpnail img-circle" alt="">
+            <div class="btn-group my-info">
+               <span class="btn dropdown-toggle" data-toggle="dropdown">
+                  <?php echo $sessionUser ?>
+                  <span class="caret"></span>
+               </span>
+               <ul class="dropdown-menu">
+                  <li><a href="profile.php">My Profile</a></li>
+                  <li><a href="newad.php">New Item</a></li>
+                  <li><a href="profile.php#my-ads">My Item</a></li>
+                  <li><a href="logout.php">Logout</a></li>
+               </ul>
+            </div>
+
+         <?php
          } else {
          ?>
             <a href="login.php">
@@ -44,7 +55,7 @@
             <ul class="nav navbar-nav navbar-right">
                <?php
                foreach (getCategories() as $cat) {
-                  echo '<li><a href="categories.php?pageid=' . $cat['ID'] . '&pagename=' . str_replace(' ', '-', $cat['Name']) . '">' . $cat['Name'] . '</a></li>';
+                  echo '<li><a href="categories.php?pageid=' . $cat['ID'] . '">' . $cat['Name'] . '</a></li>';
                }
                ?>
 

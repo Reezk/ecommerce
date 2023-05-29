@@ -36,9 +36,12 @@ if ($sessionUser) {
          $formErrors[] = 'Item Categories Must Be Not Empty';
       }
       if (!empty($formErrors)) {
-         $stmt = $con->prepare("INSERT INTO 
-               items(Name,Description,Price,CountryMade,Status,MemberID,CatID)
-               VALUES(:zname,:zdesc,:zprice,:zmade,:zstatus,:zmemberid,:zcatid)");
+         $stmt = $con->prepare(
+            "INSERT INTO 
+               items(Name,Description,Price,CountryMade,Status,MemberID,AddDate,CatID)
+               VALUES(:zname,:zdesc,:zprice,:zmade,:zstatus,:zmemberid,now(),:zcatid)
+            "
+         );
 
          $stmt->execute(array(
 
@@ -52,7 +55,7 @@ if ($sessionUser) {
 
          ));
          if ($stmt) {
-            echo 'Item Added';
+            echo '<div class="alert alert-success text-center">Item Added</div>';
          }
       }
    }
@@ -70,7 +73,7 @@ if ($sessionUser) {
                      <div class="form-group">
                         <label for="" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-10 col-md-9">
-                           <input type="text" name="name" class="form-control live" placeholder="Name Of The Item" data-class=".live-title">
+                           <input type="text" name="name" class="form-control live" placeholder="Name Of The Item" data-class=".live-title" required="required">
                         </div>
                      </div>
                      <!-- End Name Filed -->
@@ -78,7 +81,7 @@ if ($sessionUser) {
                      <div class="form-group">
                         <label for="" class="col-sm-2 control-label">Description</label>
                         <div class="col-sm-10 col-md-9">
-                           <input type="text" name="description" class="form-control live" placeholder="Describe The Item" data-class=".live-desc">
+                           <input type="text" name="description" class="form-control live" placeholder="Describe The Item" data-class=".live-desc" required="required">
                         </div>
                      </div>
                      <!-- End Description Filed -->
@@ -86,7 +89,7 @@ if ($sessionUser) {
                      <div class="form-group">
                         <label for="" class="col-sm-2 control-label">Price</label>
                         <div class="col-sm-10 col-md-9">
-                           <input type="text" name="price" class="form-control live" placeholder="Price Of The Item" data-class=".live-price">
+                           <input type="text" name="price" class="form-control live" placeholder="Price Of The Item" data-class=".live-price" required="required">
                         </div>
                      </div>
                      <!-- End Price Filed -->
@@ -94,7 +97,7 @@ if ($sessionUser) {
                      <div class="form-group">
                         <label for="" class="col-sm-2 control-label">Contry Made</label>
                         <div class="col-sm-10 col-md-9">
-                           <input type="text" name="contry" class="form-control" placeholder="Contry Made Of The Item">
+                           <input type="text" name="contry" class="form-control" placeholder="Contry Made Of The Item" required="required">
                         </div>
                      </div>
                      <!-- End Contry Made Filed -->
@@ -102,9 +105,9 @@ if ($sessionUser) {
                      <div class="form-group">
                         <label for="" class="col-sm-2 control-label">Status</label>
                         <div class="col-sm-10 col-md-9">
-                           <select class="" name="status" id="">
+                           <select class="" name="status" id="" required="required">
                               <option value="">...</option>
-                              <option value="1">New</option>
+                              <option value=" 1">New</option>
                               <option value="2">Like New</option>
                               <option value="3">Used</option>
                               <option value="4">Very Old</option>
@@ -116,8 +119,8 @@ if ($sessionUser) {
                      <div class="form-group">
                         <label for="" class="col-sm-2 control-label">Categories</label>
                         <div class="col-sm-10 col-md-9">
-                           <select class="" name="categories" id="">
-                              <option value="0">...</option>
+                           <select class="" name="categories" id="" required="required">
+                              <option value="">...</option>
                               <?php
                               $stmt2 = $con->prepare("SELECT * FROM categories");
                               $stmt2->execute();
@@ -131,7 +134,7 @@ if ($sessionUser) {
                      </div>
                      <!-- End Members Filed -->
                      <!-- Start button  Filed -->
-                     <div class="form-group">
+                     <div class=" form-group">
                         <div class="col-sm-offset-2 col-sm-10 ">
                            <input type="submit" value="Add Item" class="btn btn-primary btn-sm">
                         </div>
@@ -142,7 +145,7 @@ if ($sessionUser) {
                <div class="col-md-4">
                   <div class="thumbnail item-box live-preview">
                      <span class="price-tag ">$<span class="live-price">0</span></span>
-                     <img class="img-responsive" src="images.png" alt="">
+                     <img class="img-responsive" src="<?php echo $img ?>images.png" alt="">
                      <div class="caption">
                         <h3 class="live-title">Titel</h3>
                         <p class="live-desc">Discription</p>

@@ -2,7 +2,8 @@
 
 body {
    background-color: #f4f4f4;
-   /* background-color: red; */
+   font-size: 13px;
+   height: 3000px;
 }
 
 h1 {
@@ -85,6 +86,19 @@ h1 {
 
 /* End bootstrap  Edits */
 
+/* start header */
+
+.upper-bar {
+   padding: 10px;
+   background-color: #fff;
+}
+
+.my-img {
+   width: 32px;
+   height: 32px;
+}
+
+/* end header */
 /* Start login page */
 .login-page form,
 .the-errors {
@@ -164,6 +178,20 @@ h1 {
    color: #fff;
 }
 
+.item-box .approve-status {
+   position: absolute;
+   top: 40px;
+   left: 0;
+   background-color: #b85a5a;
+   color: #fff;
+   padding: 3px 5px;
+}
+
+.item-box .caption p {
+   height: 30px;
+   max-height: 30px;
+}
+
 /* End Categories  page */
 
 /* Start Profil  page */
@@ -190,4 +218,86 @@ h1 {
    width: 120px;
 }
 
+.thumbnail .date {
+   text-align: right;
+   font-size: 13px;
+   color: #aaa;
+   font-weight: bold;
+}
+
 /* End Profil  page */
+/* Start Show Item  page */
+.item-info h2 {
+   padding: 10px;
+   margin: 0;
+}
+
+.item-info p {
+   padding: 10px;
+}
+
+.item-info ul li {
+   padding: 10px;
+}
+
+.item-info ul li:nth-child(odd) {
+   background-color: #e8e8e8;
+}
+
+.item-info ul li span {
+   display: inline-block;
+   width: 120px;
+}
+
+.add-comment h3 {
+   margin: 0 0 10px;
+}
+
+.add-comment textarea {
+   display: block;
+   margin-bottom: 10px;
+   width: 500px;
+   height: 100px;
+}
+
+.comment-box {
+   margin-bottom: 20px;
+}
+
+.comment-box img {
+   width: 100px;
+   margin-bottom: 5px;
+}
+
+.comment-box .lead {
+   background-color: #e0e0e0;
+   position: relative;
+   padding: 10px;
+   margin-top: 25px;
+
+}
+
+.comment-box .lead:before {
+   content: "";
+   width: 0;
+   height: 0;
+   border-width: 15px;
+   border-style: solid;
+   border-color: transparent #e0e0e0 transparent transparent;
+   position: absolute;
+   left: -28px;
+   top: 10px;
+}
+
+/* End Show Item page */
+
+/* Start Our Custom */
+
+.custom-hr {
+   border-top: 1px solid #919191;
+}
+
+
+
+
+/* End Our Custom */

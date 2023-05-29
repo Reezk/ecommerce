@@ -14,11 +14,11 @@ if (isset($_SESSION['Username'])) {
    if ($do == 'Manage') {
 
       $stmt = $con->prepare("SELECT items.*, categories.Name AS categoru_name,
-                                users.Username AS user_name
-                                FROM items 
-                                INNER JOIN categories ON categories.ID = items.CatID
-                                INNER JOIN users ON users.UserID = items.MemberID
-                                ORDER BY itemID DESC");
+                              users.Username AS user_name
+                              FROM items 
+                              INNER JOIN categories ON categories.ID = items.CatID
+                              INNER JOIN users ON users.UserID = items.MemberID
+                              ORDER BY itemID DESC");
       $stmt->execute();
       $items = $stmt->fetchAll();
 
@@ -41,16 +41,16 @@ if (isset($_SESSION['Username'])) {
                   <?php foreach ($items as  $item) {
                      echo '
                         <tr>
-                            <td>' . $item['ItemID'] . '</td>
-                            <td>' . $item['Name'] . '</td>
-                            <td>' . $item['Description'] . '</td>
-                            <td>' . $item['Price'] . '</td>
-                            <td>' . $item['AddDate'] . '</td>
-                            <td>' . $item['categoru_name'] . '</td>
-                            <td>' . $item['user_name'] . '</td>
-                            <td>
-                                <a class="btn btn-success" href="items.php?do=Edit&itemid=' . $item['ItemID'] . '"><i class ="fa fa-edit"></i> Edit</a>
-                                <a class="btn btn-danger confirm" href="items.php?do=Delete&itemid=' . $item['ItemID'] . '"><i class ="fa fa-close"></i> Delete</a>';
+                           <td>' . $item['ItemID'] . '</td>
+                           <td>' . $item['Name'] . '</td>
+                           <td>' . $item['Description'] . '</td>
+                           <td>$' . $item['Price'] . '</td>
+                           <td>' . $item['AddDate'] . '</td>
+                           <td>' . $item['categoru_name'] . '</td>
+                           <td>' . $item['user_name'] . '</td>
+                           <td>
+                              <a class="btn btn-success" href="items.php?do=Edit&itemid=' . $item['ItemID'] . '"><i class ="fa fa-edit"></i> Edit</a>
+                              <a class="btn btn-danger confirm" href="items.php?do=Delete&itemid=' . $item['ItemID'] . '"><i class ="fa fa-close"></i> Delete</a>';
                      if ($item['Approve'] == 0) {
                         echo '<a class="btn btn-info activate" href="items.php?do=Approve&itemid=' . $item['ItemID'] . '"><i class="fa fa-check"></i> Approve</a>';
                      };
