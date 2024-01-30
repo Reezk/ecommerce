@@ -103,16 +103,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    <!-- Start signup Form -->
    <form action="" class="signup" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
       <div class="input-container">
-         <input class="form-control" name="username" type="text" placeholder="Type Your Userbame" autocomplete="off" pattern=".{4,20}" title="Usernme Cant be between 4 and 20 cars" "">
+         <input class="form-control" name="username" type="text" placeholder="Type Your Userbame" autocomplete="off" pattern=".{4,20}" title="Usernme Cant be between 4 and 20 cars" >
       </div>
       <div class=" input-container">
-         <input class="form-control" name="password" type="password" placeholder="Type a complex Password" autocomplete="new-password" minlength="5" "">
+         <input class="form-control" name="password" type="password" placeholder="Type a complex Password" autocomplete="new-password" minlength="5" >
       </div>
       <div class=" input-container">
-         <input class="form-control" name="password-agin" type="password" placeholder="Type a Password agine" autocomplete="new-password" minlength="5" "">
+         <input class="form-control" name="password-agin" type="password" placeholder="Type a Password agine" autocomplete="new-password" minlength="5" >
       </div>
       <div class=" input-container">
-         <input class="form-control" name="email" type="email" placeholder="Type a valid email" "">
+         <input class="form-control" name="email" type="email" placeholder="Type a valid email" >
       </div>
       <div class=" input-container">
          <input class="btn btn-success btn-block" name="signup" type="submit" value="Signup">
